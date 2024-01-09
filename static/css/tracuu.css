@@ -1,0 +1,44 @@
+body{
+    background-image: url('https://res.cloudinary.com/domohwdai/image/upload/v1704520196/TPHCM_glfovz.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: none;
+}
+
+#section1{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+.head{
+    background-color: rgba(0, 0, 0, 0.468);
+    color: white;
+    width: 1400px;
+    padding: 15px;
+}
+#btnSearch button{
+    padding: 15px;
+    color: black;
+    background-color: yellow;
+    border-radius: 10px;
+    outline: 0;
+    border-width: 0;
+}
+#btnSearch button:hover{
+    background-color: #f9bb64;
+}
+.head h1{
+    color: #ffeaa7
+}
+.search-box{
+    width: 400px;
+    background: #fff;
+    border-radius: 5px
+}
+.rows{
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+}

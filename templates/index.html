@@ -1,0 +1,55 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<section id="section1">
+    <ul class="pagination justify-content-end mt-2">
+        {% for i in range(pages) %}
+        <li class="page-item"><a class="page-link" href="/home/?page={{ i + 1 }}">{{ i + 1 }}</a></li>
+        {% endfor %}
+    </ul>
+    <section class="container">
+        <h1 style="font-size: 30px"> Khám phá các chuyến bay phổ biến của chúng tôi</h1>
+        <div class="row">
+            {% for f in flights %}
+            <div class="col-xs-12 col-md-3" style="padding: 5px">
+                <div class="card">
+                    <img class="card-img-top"
+                         src="https://res.cloudinary.com/domohwdai/image/upload/v1704520196/TPHCM_glfovz.jpg"
+                         alt="Card image">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ f.tenCB }}</h4>
+                        <p class="card-text">{{ f.ngayBay }}</p>
+                        <a href="#" class="btn btn-primary">Đặt vé</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</section>
+<section id="section2">
+    <div class="head">
+        <h1>TRA CỨU CHUYẾN BAY</h1>
+        <form method="get" action="/home">
+            <div>
+                <label>Tuyến bay:</label>
+                <select class="form-select" name="tuyen_bay" >
+                    {% for r in routes %}
+                    <option>{{ r.tenTB }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div style="padding:5px">
+                    <label>Ngày khởi hành:</label>
+                    <input type="date" class="form-control, col-md-3">
+            </div>
+            <div id="btnSearch">
+                    <button type="submit">Tìm chuyến bay</button>
+            </div>
+        </form>
+    </div>
+
+</section>
+
+<link href="/static/css/home.css" rel="stylesheet">
+{% endblock %}

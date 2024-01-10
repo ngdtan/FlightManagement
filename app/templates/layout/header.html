@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #166987">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/home">QUẢN LÝ CHUYẾN BAY</a>
+        <a class="navbar-brand" href="/">QUẢN LÝ CHUYẾN BAY</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,15 +10,25 @@
                     <form action="{{url_for('load_tracuu')}}"></form>
                     <a class="nav-link" href="/tracuuCB">Đặt vé trực tuyến</a>
                 </li>
+
                 {% if current_user.is_authenticated %}
                 <li class="nav-item d-flex">
-                    <a class="nav-link" href="/">Đăng Xuất</a>
+                    <a class="nav-link" href="/">Chào {{ current_user.username }}</a>
+                </li>
+                <li class="nav-item d-flex">
+                    <a class="nav-link" href="/logout">Đăng Xuất</a>
                 </li>
                 {% else %}
                 <li class="nav-item d-flex">
-                    <a class="nav-link" href="/">Đăng Nhập</a>
+                    <a class="nav-link" href="/login">Đăng Nhập</a>
                 </li>
-                {% endif%}
+
+                <li class="nav-item d-flex">
+                    <a class="nav-link" href="/register">Đăng Ký</a>
+                </li>
+                {% endif %}
+
+
             </ul>
         </div>
 

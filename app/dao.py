@@ -1,5 +1,5 @@
 from app.models import ChuyenBay, TuyenBay, SanBay, MayBay, NguoiDung
-from app import app
+from app import app, db
 import hashlib
 def load_flights(tuyen_bay=None, page=None):
     flights = ChuyenBay.query
@@ -35,3 +35,9 @@ def auth_user(username, password):
 
     return NguoiDung.query.filter(NguoiDung.username.__eq__(username.strip()),
                                   NguoiDung.password.__eq__(password)).first()
+
+def add_user(username, password, hoTen, CCCD, SDT, email):
+    password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
+    u = NguoiDung(username=username, password=password, hoTen=hoTen, CCCD=CCCD, SDT=SDT, email=email)
+    db.session.add(u)
+    db.session.commit()

@@ -4,7 +4,7 @@
 <section id="section1">
     <ul class="pagination justify-content-end mt-2">
         {% for i in range(pages) %}
-        <li class="page-item"><a class="page-link" href="/home/?page={{ i + 1 }}">{{ i + 1 }}</a></li>
+        <li class="page-item"><a class="page-link" href="/?page={{ i + 1 }}">{{ i + 1 }}</a></li>
         {% endfor %}
     </ul>
     <section class="container">
@@ -30,7 +30,7 @@
 <section id="section2">
     <div class="head">
         <h1>TRA CỨU CHUYẾN BAY</h1>
-        <form method="get" action="/home">
+        <form method="get" action="/">
             <div>
                 <label>Tuyến bay:</label>
                 <select class="form-select" name="tuyen_bay" >

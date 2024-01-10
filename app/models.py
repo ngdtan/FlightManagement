@@ -19,10 +19,8 @@ class QuyDinh(db.Model):
 class NguoiDung(db.Model, UserMixin):
     id = Column(Integer, autoincrement=True, primary_key=True)
     hoTen = Column(String(50), nullable=False)
-    gioiTinh = Column(Boolean, nullable=False)
     CCCD = Column(String(50), nullable=False)
     email = Column(String(100), nullable=False)
-    ngaySinh = Column(Date, nullable=False)
     SDT = Column(String(50), nullable=False)
     username = Column(String(50), nullable=False, unique=True)
     password = Column(String(100), nullable=False)
@@ -63,6 +61,7 @@ class TuyenBay(db.Model):
     san_bay_den_id = Column(Integer, ForeignKey(SanBay.id))
     san_bay_di_id = Column(Integer, ForeignKey(SanBay.id))
     chuyen_bay = relationship("ChuyenBay", backref="tuyen_bay", lazy=True)
+    # don_gia_ve = relationship("DonGiaVe", backref="tuyen_bay", lazy=True)
     CheckConstraint("san_bay_den_id <> san_bay_di_id", name='checkFromTo')
 
     def __str__(self):
@@ -103,7 +102,7 @@ class HangVe(db.Model):
     id = Column(Integer, autoincrement=True, primary_key=True)
     tenHangVe = Column(String(50), nullable=False)
     ve = relationship("Ve", backref="hang_ve", lazy=True)
-
+    gia_ve = relationship("DonGiaVe", backref="hang_ve", lazy=True)
     def __str__(self):
         return self.tenHangVe
 
@@ -126,51 +125,67 @@ class Ve(db.Model):
     hang_ve_id = Column(Integer, ForeignKey(HangVe.id))
     nhan_vien_id = Column(Integer, ForeignKey(NhanVien.id))
 
+class DonGiaVe(db.Model):
+    tuyenBay_id = Column(Integer, ForeignKey(TuyenBay.id), primary_key=True)
+    hangVe_id = Column(Integer, ForeignKey(HangVe.id), primary_key=True)
+    donGia = Column(Double, nullable=False)
 
 if __name__ == '__main__':
     with app.app_context():
-        # db.create_all()
+        db.create_all()
 
-        import hashlib
-        u = NguoiDung(hoTen='Tuấn Kiệt',gioiTinh=True, CCCD='079203004145', SDT='0901147032', ngaySinh='2003/09/19', email='a@gmail.com', username='admin1', password=str(hashlib.md5("123456".encode('utf-8')).hexdigest()))
-        db.session.add(u)
-        db.session.commit()
-        sb1 = SanBay(tenSB='TP Hồ Chí Minh')
-        sb2 = SanBay(tenSB='Hà Nội')
-        sb3 = SanBay(tenSB='Đà Nẵng')
-        sb4 = SanBay(tenSB='Phú Quốc')
 
-        tb1 = TuyenBay(tenTB="SGN-HN", san_bay_di_id=1, san_bay_den_id=2)
-        tb2 = TuyenBay(tenTB="HN-SGN", san_bay_di_id=2, san_bay_den_id=1)
-        tb3 = TuyenBay(tenTB="DNG-SGN", san_bay_di_id=3, san_bay_den_id=1)
-        tb4 = TuyenBay(tenTB="DNG-PQ", san_bay_di_id=3, san_bay_den_id=4)
-
-        mb1 = MayBay(tenMB='Airbus01')
-        mb2 = MayBay(tenMB='Airbus02')
-        cb1 = ChuyenBay(tenCB='SGN-HN01', ngayBay='2024/01/01 19:00:00', thoiGianBay='02:30:00', tuyen_bay_id=1, may_bay_id=1)
-        cb2 = ChuyenBay(tenCB='SGN-HN02', ngayBay='2024/02/01 19:00:00', thoiGianBay='02:30:00', tuyen_bay_id=1, may_bay_id=2)
-        cb3 = ChuyenBay(tenCB='DNG_SGN01', ngayBay='2023/12/01 10:00:00', thoiGianBay='01:30:00', tuyen_bay_id=3, may_bay_id=1)
-        cb4 = ChuyenBay(tenCB='DNG-PQ01', ngayBay='2024/01/01 20:00:00', thoiGianBay='01:30:00', tuyen_bay_id=4, may_bay_id=2)
-
-        db.session.add(sb1)
-        db.session.add(sb2)
-        db.session.add(sb3)
-        db.session.add(sb4)
-
-        db.session.add(mb1)
-        db.session.add(mb2)
-
-        db.session.add(cb1)
-        db.session.add(cb2)
-        db.session.add(cb3)
-        db.session.add(cb4)
-
-        db.session.add(tb1)
-        db.session.add(tb2)
-        db.session.add(tb3)
-        db.session.add(tb4)
-
-        db.session.commit()
+        # gv1 = DonGiaVe(tuyenBay_id=1, hangVe_id=1, donGia=1500000)
+        # gv2 = DonGiaVe(tuyenBay_id=2, hangVe_id=1, donGia=1600000)
+        #
+        # db.session.add(gv1)
+        # db.session.add(gv2)
+        # db.session.commit()
+        # import hashlib
+        # u = NguoiDung(hoTen='Tuấn Kiệt', CCCD='079203004145', SDT='0901147032', email='a@gmail.com', username='admin1', password=str(hashlib.md5("123456".encode('utf-8')).hexdigest()), user_role=UserRole.ADMIN)
+        # db.session.add(u)
+        # db.session.commit()
+        #
+        # hv1 = HangVe(tenHangVe='Hạng 1')
+        # hv2 = HangVe(tenHangVe='Hạng 2')
+        # db.session.add(hv1)
+        # db.session.add(hv2)
+        # sb1 = SanBay(tenSB='TP Hồ Chí Minh')
+        # sb2 = SanBay(tenSB='Hà Nội')
+        # sb3 = SanBay(tenSB='Đà Nẵng')
+        # sb4 = SanBay(tenSB='Phú Quốc')
+        #
+        # tb1 = TuyenBay(tenTB="SGN-HN", san_bay_di_id=1, san_bay_den_id=2)
+        # tb2 = TuyenBay(tenTB="HN-SGN", san_bay_di_id=2, san_bay_den_id=1)
+        # tb3 = TuyenBay(tenTB="DNG-SGN", san_bay_di_id=3, san_bay_den_id=1)
+        # tb4 = TuyenBay(tenTB="DNG-PQ", san_bay_di_id=3, san_bay_den_id=4)
+        #
+        # mb1 = MayBay(tenMB='Airbus01')
+        # mb2 = MayBay(tenMB='Airbus02')
+        # cb1 = ChuyenBay(tenCB='SGN-HN01', ngayBay='2024/01/01 19:00:00', thoiGianBay='02:30:00', tuyen_bay_id=1, may_bay_id=1)
+        # cb2 = ChuyenBay(tenCB='SGN-HN02', ngayBay='2024/02/01 19:00:00', thoiGianBay='02:30:00', tuyen_bay_id=1, may_bay_id=2)
+        # cb3 = ChuyenBay(tenCB='DNG_SGN01', ngayBay='2023/12/01 10:00:00', thoiGianBay='01:30:00', tuyen_bay_id=3, may_bay_id=1)
+        # cb4 = ChuyenBay(tenCB='DNG-PQ01', ngayBay='2024/01/01 20:00:00', thoiGianBay='01:30:00', tuyen_bay_id=4, may_bay_id=2)
+        #
+        # db.session.add(sb1)
+        # db.session.add(sb2)
+        # db.session.add(sb3)
+        # db.session.add(sb4)
+        #
+        # db.session.add(mb1)
+        # db.session.add(mb2)
+        #
+        # db.session.add(cb1)
+        # db.session.add(cb2)
+        # db.session.add(cb3)
+        # db.session.add(cb4)
+        #
+        # db.session.add(tb1)
+        # db.session.add(tb2)
+        # db.session.add(tb3)
+        # db.session.add(tb4)
+        #
+        # db.session.commit()
 
 
 

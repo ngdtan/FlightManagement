@@ -1,8 +1,8 @@
 {% extends 'layout/base.html' %}
+
 {% block content %}
-{% if current_user.is_authenticated %}
-{% else %}
-<form method="post" action="{{url_for('user_login')}}" class="container">
+<h1 class="text-center text-info mt-1">ĐĂNG NHẬP NGƯỜI DÙNG</h1>
+<form method="post" action="" class="container">
     <div class="mb-3 mt-3">
         <label for="email" class="form-label">Username:</label>
         <input type="text" class="form-control" id="email" name="username" placeholder="Tên đăng nhập">
@@ -13,5 +13,4 @@
     </div>
     <button type="submit" class="btn btn-primary">Đăng nhập</button>
 </form>
-{% endif %}
 {% endblock %}

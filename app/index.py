@@ -1,8 +1,7 @@
 import math
 
 from flask import render_template, request, redirect, url_for, session, jsonify
-import dao
-from app import app, login
+from app import app, login, dao
 from flask_login import login_user, logout_user
 
 

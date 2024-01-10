@@ -1,5 +1,6 @@
-from app.models import ChuyenBay, TuyenBay, SanBay, MayBay, NguoiDung
+from app.models import ChuyenBay, TuyenBay, SanBay, MayBay, NguoiDung, Ve
 from app import app, db
+from  sqlalchemy import func
 import hashlib
 def load_flights(tuyen_bay=None, page=None):
     flights = ChuyenBay.query
@@ -41,3 +42,9 @@ def add_user(username, password, hoTen, CCCD, SDT, email):
     u = NguoiDung(username=username, password=password, hoTen=hoTen, CCCD=CCCD, SDT=SDT, email=email)
     db.session.add(u)
     db.session.commit()
+
+def doanh_thu_thong_ke():
+    query = (db.session.query(ChuyenBay.tuyen_bay_id, func.sum(Ve.giaVe), func.count(ChuyenBay.id).label('Số Lượt Bay'))\
+             .join(ChuyenBay.id==Ve.chuyen_bay_id))
+
+    return query.group_by(ChuyenBay.tuyen_bay_id)

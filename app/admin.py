@@ -1,6 +1,6 @@
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin, BaseView, expose
-from app import app, db
+from app import app, db, dao
 from app.models import ChuyenBay, TuyenBay, SanBay, UserRole, DonGiaVe
 from flask_login import logout_user, current_user
 from flask import redirect
@@ -55,7 +55,7 @@ class MyTicketCostView(AuthenticatedAdmin):
 class StatsView(BaseView):
     @expose("/")
     def index(self):
-        return self.render('admin/stats.html')
+        return self.render('admin/stats.html', stats=dao.doanh_thu_thong_ke())
 
 
 class LogoutView(AuthenticatedUser):
@@ -63,7 +63,7 @@ class LogoutView(AuthenticatedUser):
     def index(self):
         logout_user()
 
-        return redirect("/admin")
+        return redirect("/")
 
 
 admin.add_view(MyRouteView(TuyenBay, db.session))

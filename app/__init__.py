@@ -2,6 +2,7 @@ from flask import Flask
 from urllib.parse import quote
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+
 app = Flask(__name__)
 
 app.secret_key = 'dvdfvbbBKBJKBKBK'

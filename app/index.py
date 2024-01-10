@@ -2,7 +2,9 @@ import math
 
 from flask import render_template, request, redirect, url_for, session, jsonify
 from app import app, login, dao
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
+
+from app.models import UserRole
 
 
 @app.route('/')
@@ -31,7 +33,11 @@ def load_login():
 
         if user:
             login_user(user=user)
-            return redirect('/')
+            if current_user.user_role == UserRole.ADMIN:
+                return redirect('/admin')
+            else:
+                return redirect(url_for('home'))
+
     return render_template("login.html")
 
 
@@ -43,7 +49,8 @@ def admin_login():
 
     if user:
         login_user(user=user)
-        return redirect('/admin')
+
+    return redirect('/admin')
 
 @app.route('/logout')
 def user_logout():

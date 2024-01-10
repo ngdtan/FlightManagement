@@ -134,22 +134,6 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-
-        gv1 = DonGiaVe(tuyenBay_id=1, hangVe_id=1, donGia=1500000)
-        gv2 = DonGiaVe(tuyenBay_id=2, hangVe_id=1, donGia=1600000)
-
-        db.session.add(gv1)
-        db.session.add(gv2)
-        db.session.commit()
-        import hashlib
-        u = NguoiDung(hoTen='Tuấn Kiệt', CCCD='079203004145', SDT='0901147032', email='a@gmail.com', username='admin1', password=str(hashlib.md5("123456".encode('utf-8')).hexdigest()), user_role=UserRole.ADMIN)
-        db.session.add(u)
-        db.session.commit()
-
-        hv1 = HangVe(tenHangVe='Hạng 1')
-        hv2 = HangVe(tenHangVe='Hạng 2')
-        db.session.add(hv1)
-        db.session.add(hv2)
         sb1 = SanBay(tenSB='TP Hồ Chí Minh')
         sb2 = SanBay(tenSB='Hà Nội')
         sb3 = SanBay(tenSB='Đà Nẵng')
@@ -187,6 +171,21 @@ if __name__ == '__main__':
 
         db.session.commit()
 
+        gv1 = DonGiaVe(tuyenBay_id=1, hangVe_id=1, donGia=1500000)
+        gv2 = DonGiaVe(tuyenBay_id=2, hangVe_id=1, donGia=1600000)
+
+        db.session.add(gv1)
+        db.session.add(gv2)
+        db.session.commit()
+        import hashlib
+        u = NguoiDung(hoTen='Tuấn Kiệt', CCCD='079203004145', SDT='0901147032', email='a@gmail.com', username='admin1', password=str(hashlib.md5("123456".encode('utf-8')).hexdigest()), user_role=UserRole.ADMIN)
+        db.session.add(u)
+        db.session.commit()
+
+        hv1 = HangVe(tenHangVe='Hạng 1')
+        hv2 = HangVe(tenHangVe='Hạng 2')
+        db.session.add(hv1)
+        db.session.add(hv2)
 
 
 
